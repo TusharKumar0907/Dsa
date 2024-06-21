@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void merge(vector<int>& arr, vector<int>& left, vector<int>& right) {
+    int i = 0, j = 0, k = 0;
+
+    while (i < left.size() && j < right.size()) {
+        if (left[i] <= right[j]) {
+            arr[k++] = left[i++];
+        } else {
+            arr[k++] = right[j++];
+        }
+    }
+
+    while (i < left.size()) {
+        arr[k++] = left[i++];
+    }
+
+    while (j < right.size()) {
+        arr[k++] = right[j++];
+    }
+}
+
+void mergeSort(vector<int>& arr) {
+    int n = arr.size();
+    if (n > 1) {
+        int mid = n / 2;
+
+        // Divide the array into two halves
+        vector<int> left(arr.begin(), arr.begin() + mid);
+        vector<int> right(arr.begin() + mid, arr.end());
+
+        // Recursively sort each half
+        mergeSort(left);
+        mergeSort(right);
+
+        // Merge the sorted halves
+        merge(arr, left, right);
+    }
+}
+
+int main() {
+    vector<int> arr = {38, 27, 43, 3, 9, 82, 10};
+    
+    mergeSort(arr);
+
+    for (int i : arr) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
